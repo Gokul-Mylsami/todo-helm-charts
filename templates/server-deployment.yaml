@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "backend.deployment.name" . }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "backend.deployment.selectorLabel" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "backend.deployment.selectorLabel" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ printf "%s-backend" .Chart.Name }}
+          image: {{ .Values.backend.image.repository }}:{{ .Values.backend.image.tag }}
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
+          ports:
+            - containerPort: {{ .Values.backend.image.containerPort }}
+          env:
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: PORT
+                  name: {{ .Release.Name }}-configmap
+            - name: MONGO_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: MONGO_URL
+                  name: {{ .Release.Name }}-configmap
+          resources:
+            {{- toYaml .Values.backend.resources | nindent 12 }}

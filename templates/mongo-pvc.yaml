@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "mongo.pvc.name" .}}
+spec:
+  accessModes:
+    {{ toYaml .Values.pvc.accessModes }}
+  storageClassName: {{ include "storageclass.name" .}}
+  resources:
+    requests:
+      {{ toYaml .Values.pvc.requests | nindent 6 }}

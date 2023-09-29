@@ -1,0 +1,4 @@
+.prettierignore
+temp
+temp/
+.gitignore

@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "frontend.deployment.name" . }}
+spec:
+  replicas: {{ .Values.frontend.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "frontend.deployment.selectorLabel" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "frontend.deployment.selectorLabel" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ printf "%s-frontend" .Chart.Name }}
+          image: {{ .Values.frontend.image.repository }}:{{ .Values.frontend.image.tag }}
+          ports:
+            - containerPort: {{ .Values.frontend.image.containerPort }}
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
+          env:
+            - name: REACT_APP_BACKEND_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: REACT_APP_BACKEND_URL
+                  name: {{ .Release.Name }}-configmap
+          resources:
+            {{- toYaml .Values.frontend.resources | nindent 12 }}
