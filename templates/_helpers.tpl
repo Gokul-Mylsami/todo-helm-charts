@@ -27,7 +27,6 @@ app: {{ printf "client" }}
 {{- end -}}
 
 {{- define "backend.deployment.selectorLabel" -}}
-app.kubernetes.io/name: {{ include "backend.deployment.name" . }}
 app: {{ printf "server" }}
 {{- end }}
 
