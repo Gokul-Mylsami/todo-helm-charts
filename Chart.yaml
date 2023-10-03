@@ -4,3 +4,9 @@ description: A todo app
 name: todo-app
 type: application
 version: 0.0.1
+# dependencies:
+#   - name: aws-efs-csi-driver
+#     version: 2.5.0
+#     repository: https://kubernetes-sigs.github.io/aws-efs-csi-driver/
+#     namespace: kube-system
+#     condition: aws-efs-csi-driver.enabled
