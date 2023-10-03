@@ -19,10 +19,10 @@ spec:
             - containerPort: {{ .Values.frontend.image.containerPort }}
           imagePullPolicy: {{ .Values.imagePullPolicy }}      
           env:
-            - name: REACT_APP_BACKEND_URL
+            - name: BACKEND_API
               valueFrom:
                 configMapKeyRef:
-                  key: REACT_APP_BACKEND_URL
+                  key: BACKEND_API
                   name: {{ .Release.Name }}-configmap
           resources:
             {{- toYaml .Values.frontend.resources | nindent 12 }}

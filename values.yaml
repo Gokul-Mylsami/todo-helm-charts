@@ -1,5 +1,6 @@
 namespace: default
 imagePullPolicy: Always
+awsEfsCsiDriverNamespace: kube-system
 frontend:
   replicaCount: 1
   image:
@@ -13,25 +14,25 @@ frontend:
     limits:
       memory: 400Mi
       cpu: ".5"
-  
-  service: 
-    type : LoadBalancer
+
+  service:
+    type: LoadBalancer
     port: 8001
     targetPort: 80
 
 backend:
-  image: 
+  image:
     repository: gokulmsfag/node-todo
     tag: v5
     containerPort: 8000
   resources:
     requests:
-        memory: 20Mi
-        cpu: "0.25"
+      memory: 20Mi
+      cpu: "0.25"
     limits:
-        memory: 400Mi
-        cpu: "1"
-  
+      memory: 400Mi
+      cpu: "1"
+
   service:
     type: LoadBalancer
     port: 8000
@@ -46,14 +47,14 @@ mongo:
     mountPath: /data/db
 
   resources:
-      requests:
-        memory: 250Mi
-        cpu: "0.25"
-      limits:
-        memory: 500Mi
-        cpu: ".5"
-  
-  service: 
+    requests:
+      memory: 250Mi
+      cpu: "0.25"
+    limits:
+      memory: 500Mi
+      cpu: ".5"
+
+  service:
     type: ClusterIP
     port: 27017
     targetPort: 27017
@@ -62,12 +63,11 @@ storageClass:
   provisioner: hostpath
   volumeBindingMode: Immediate
   reclaimPolicy: Delete
-  parameters: 
+  parameters:
     type: gp2
 
-
 pv:
-  capacity: 
+  capacity:
     storage: 10Gi
   volumeMode: Filesystem
   accessModes:
@@ -75,7 +75,7 @@ pv:
   persistentVolumeReclaimPolicy: Retain
   csi:
     driver: efs.csi.aws.com
-    volumeHandle: fs-04a2eaaf81773c01c 
+    volumeHandle: fs-04a2eaaf81773c01c
 
 pvc:
   accessModes:
