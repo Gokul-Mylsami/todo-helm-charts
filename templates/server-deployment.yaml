@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: {{ include "backend.deployment.name" . }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.backend.replicas }}
   selector:
     matchLabels:
       {{- include "backend.deployment.selectorLabel" . | nindent 6 }}

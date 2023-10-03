@@ -16,3 +16,7 @@ spec:
           image: {{ .Values.mongo.image }}:{{ .Values.mongo.tag }}
           ports:
             - containerPort: {{ .Values.mongo.containerPort }}
+          volumeMounts:
+            {{- include "mongo.deployment.volumeMounts" . | nindent 12}}
+      volumes:
+        {{- include "mongo.deployment.volume" . | nindent 8}}

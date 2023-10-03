@@ -24,20 +24,5 @@ spec:
                 configMapKeyRef:
                   key: BACKEND_API
                   name: {{ .Release.Name }}-configmap
-            - name: BACKEND_SERVICE
-              valueFrom:
-                configMapKeyRef:
-                  key: BACKEND_SERVICE
-                  name: {{ .Release.Name }}-configmap
-            - name: NAMESPACE
-              valueFrom:
-                configMapKeyRef:
-                  key: NAMESPACE
-                  name: {{ .Release.Name }}-configmap
-            - name: PORT
-              valueFrom:
-                configMapKeyRef:
-                  key: PORT
-                  name: {{ .Release.Name }}-configmap
           resources:
             {{- toYaml .Values.frontend.resources | nindent 12 }}

@@ -56,14 +56,13 @@ app: {{ printf "mongo" }}
 # Volume mount
 {{- define "mongo.deployment.volumeMounts" -}}
 - name: {{ printf "%s-volume-mount" .Release.Name }}
-  volumeMounts:
-    mountPath: {{ printf "/data/db" }}
+  mountPath: {{ printf "/data/db" }}
 {{- end -}}
 
 # Volume Ref
 {{- define "mongo.deployment.volume" -}}
-name: {{ printf "%s-volume-mount" .Release.Name }}
-persistentVolumeClaim: 
+- name: {{ printf "%s-volume-mount" .Release.Name }}
+  persistentVolumeClaim: 
     claimName: {{ printf "%s-pvc" .Release.Name }}
 {{- end -}}
 

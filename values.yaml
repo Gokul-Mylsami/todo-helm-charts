@@ -5,7 +5,7 @@ frontend:
   replicaCount: 1
   image:
     repository: gokulmsfag/frontend-todo
-    tag: v9
+    tag: v8
     containerPort: 80
   resources:
     requests:
@@ -21,6 +21,7 @@ frontend:
     targetPort: 80
 
 backend:
+  replicas: 3
   image:
     repository: gokulmsfag/node-todo
     tag: v5
