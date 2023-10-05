@@ -82,3 +82,11 @@ pvc:
     - ReadWriteMany
   requests:
     storage: 10Gi
+
+ingress: 
+  frontend:
+    path: /
+    pathType: Prefix
+  backend:
+    path: /api
+    pathType: Prefix

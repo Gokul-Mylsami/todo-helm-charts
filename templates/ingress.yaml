@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: todo-ingress
+spec:
+  rules:
+    - http:
+        paths:
+          - path: {{  .Values.ingress.frontend.path }}
+            pathType: {{  .Values.ingress.frontend.pathType }}
+            backend:
+              service:
+                name: {{ include "frontend.service.name" . }}
+                port:
+                  number: {{ .Values.frontend.service.port }}
+          - path: {{ .Values.ingress.backend.path }}
+            pathType: {{ .Values.ingress.backend.pathType }}
+            backend:
+              service:
+                name: {{ include "backend.service.name" . }}
+                port:
+                  number: {{ .Values.backend.service.port }}
