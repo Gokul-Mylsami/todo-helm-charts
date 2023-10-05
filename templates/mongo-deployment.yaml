@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "mongo.deployment.name" . }}
+  annotations:
+    "helm.sh/hook": pre-install
 spec:
   selector:
     matchLabels:
@@ -17,6 +19,6 @@ spec:
           ports:
             - containerPort: {{ .Values.mongo.containerPort }}
           volumeMounts:
-            {{- include "mongo.deployment.volumeMounts" . | nindent 12}}
+            {{- include "mongo.deployment.volumeMounts" . | nindent 12 }}
       volumes:
-        {{- include "mongo.deployment.volume" . | nindent 8}}
+        {{- include "mongo.deployment.volume" . | nindent 8 }}

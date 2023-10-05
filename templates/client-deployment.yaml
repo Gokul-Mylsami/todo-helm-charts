@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "frontend.deployment.name" . }}
+  annotations:
+    "helm.sh/hook": post-install
 spec:
   replicas: {{ .Values.frontend.replicaCount }}
   selector:

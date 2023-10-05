@@ -14,14 +14,13 @@ frontend:
     limits:
       memory: 400Mi
       cpu: ".5"
-
   service:
     type: LoadBalancer
-    port: 8001
+    port: 80
     targetPort: 80
 
 backend:
-  replicas: 3
+  replicas: 1
   image:
     repository: gokulmsfag/node-todo
     tag: v5
@@ -35,7 +34,7 @@ backend:
       cpu: "1"
 
   service:
-    type: LoadBalancer
+    type: ClusterIP
     port: 8000
     targetPort: 8000
 
@@ -61,11 +60,11 @@ mongo:
     targetPort: 27017
 
 storageClass:
-  provisioner: hostpath
+  provisioner: efs.csi.aws.com
   volumeBindingMode: Immediate
   reclaimPolicy: Delete
   parameters:
-    type: gp2
+    {}
 
 pv:
   capacity:
@@ -76,7 +75,7 @@ pv:
   persistentVolumeReclaimPolicy: Retain
   csi:
     driver: efs.csi.aws.com
-    volumeHandle: fs-04a2eaaf81773c01c
+    volumeHandle: fs-0c3fa8cc1fab3bb36
 
 pvc:
   accessModes:
