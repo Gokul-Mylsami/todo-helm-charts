@@ -15,7 +15,7 @@ frontend:
       memory: 400Mi
       cpu: ".5"
   service:
-    type: LoadBalancer
+    type: ClusterIP
     port: 80
     targetPort: 80
 
@@ -35,7 +35,7 @@ backend:
 
   service:
     type: ClusterIP
-    port: 8000
+    port: 80
     targetPort: 8000
 
 mongo:
@@ -84,9 +84,11 @@ pvc:
     storage: 10Gi
 
 ingress: 
+  hostFrontend: client.gokulmylsami.me
+  hostBackend: server.gokulmylsami.me
   frontend:
     path: /
     pathType: Prefix
   backend:
-    path: /api
+    path: /
     pathType: Prefix

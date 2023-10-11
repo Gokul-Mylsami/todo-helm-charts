@@ -2,9 +2,12 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: todo-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
 spec:
   rules:
-    - http:
+    - host: {{ .Values.ingress.hostFrontend }}
+      http:
         paths:
           - path: {{  .Values.ingress.frontend.path }}
             pathType: {{  .Values.ingress.frontend.pathType }}
@@ -13,6 +16,9 @@ spec:
                 name: {{ include "frontend.service.name" . }}
                 port:
                   number: {{ .Values.frontend.service.port }}
+    - host: {{ .Values.ingress.hostBackend }}
+      http:
+        paths:
           - path: {{ .Values.ingress.backend.path }}
             pathType: {{ .Values.ingress.backend.pathType }}
             backend:
